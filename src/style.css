@@ -52,4 +52,6 @@ html {
 
 #controls * {
   vertical-align: middle;
+  font-size: 16px;
+  font-family: 'Libre Franklin';
 }
