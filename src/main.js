@@ -1,10 +1,10 @@
 /* I used this tutorial: https://flowingdata.com/2018/10/10/how-to-make-an-animated-pyramid-chart-with-d3-js/ */
 
-var data;
+var data, filteredData;
 var displayYear = 2000, isPlaying = false;
 var barHeight = 20, barWidth = 380, centerOffset = 20;
-var femaleScale = d3.scaleLinear().domain([0, 30000000]).range([0, -barWidth]);
-var maleScale = d3.scaleLinear().domain([0,  30000000]).range([0, barWidth]);
+var femaleScale = d3.scaleLinear().domain([0, 105000000]).range([0, -barWidth]);
+var maleScale = d3.scaleLinear().domain([0,  105000000]).range([0, barWidth]);
 
 /* Event handling */
 function handleYearInputChange() {
@@ -23,6 +23,13 @@ function initializeEventHandlers() {
 
   d3.select("#play-button")
     .on("click", handlePlayButtonClick);
+
+  // Handle region change (when user selects a different region)
+  d3.select("#region-select")
+    .on("change", function() {
+      const selectedRegion = this.value;
+      filterDataByRegion(selectedRegion); // Filter and update chart based on selected region
+    });
 }
 
 /* Initialization */
@@ -72,13 +79,33 @@ function initializeData(csv) {
     }
   });
  
-  data = data.filter(function(d) {
-    return d.region == "Europe";
-  });
+  // Get unique regions for the dropdown
+  const regions = _.uniq(data.map(d => d.region));
+
+  // Populate the dropdown with regions
+  const regionSelect = d3.select("#region-select");
+  regionSelect.selectAll("option")
+    .data(regions)
+    .enter()
+    .append("option")
+    .attr("value", d => d)
+    .text(d => d);
+
+  // Set default to Europe
+  regionSelect.node().value = "Europe";
+
+  // Filter data initially for Europe
+  filterDataByRegion("Europe");
+}
+
+function filterDataByRegion(region) {
+  // Filter data by the selected region
+  filteredData = data.filter(d => d.region === region);
+  updateChart();
 }
 
 function getYearData() {
-  var yearData = data.filter(function(d) {
+  var yearData = filteredData.filter(function(d) {
     return d.year === displayYear;
   });
   yearData = _.sortBy(yearData, function(d) {
@@ -147,7 +174,7 @@ function updateChart() {
 
   // Update main title
   d3.select(".title")
-    .text("Europe's Population by Age and Gender (" + displayYear + ")");
+    .text(`${d3.select("#region-select").node().value}'s Population by Age and Gender (${displayYear})`);
 
   // Update slider
   d3.select("#year-input")
