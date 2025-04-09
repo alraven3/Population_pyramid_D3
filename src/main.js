@@ -13,8 +13,8 @@ const regionMaxPopulation = {
   "Eastern Asia": 80000000,
   "Europe": 40000000,
   "Northern America": 20000000,
-  "Latin America & the Caribbean": 60000000,
-  "Northern Africa": 40000000,
+  "Latin America and the Caribbean": 60000000,
+  "Northern Africa and Western Asia": 40000000,
   "Oceania": 2000000,
   "South-Eastern Asia": 40000000
 };
