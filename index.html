@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Population Pyramid</title>
+    <link href="/src/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="chart">
+      <svg width="1200" height="520"> <!-- svg element containing a series of nested g elements -->
+        <g transform="translate(20, 0)"> <!-- outermost g introduces some left padding -->
+          <g transform="translate(400, 0)"> <!-- this one places the origin of the x coordinate in the center of the chart -->
+            <text class="title" x="0" y="20"></text>
+            <text class="male_label" x="-200" y="55">Female</text>
+            <text class="female_label" x="200" y="55">Male</text>
+            <g transform="translate(0, 60)"> <!-- innermost g acts as a container for the bars -->
+              <g class="female axis" transform="translate(-20, 0)"></g>
+              <g class="male axis" transform="translate(20, 0)"></g>
+              <g class="bars"></g>
+            </g>
+          </g>
+        </g>
+      </svg>
+      <div id="controls">
+        <input type="range" id="year-input" value="1980" min="1950" max="2023" step="1" style="width: 800px;"/>
+        <button id="play-button">Play</button>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+    <script src="lib/d3.min.js"></script>
+    <script src="lib/lodash.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+body {
+  font-family: 'Libre Franklin';
+  font-size: 15px;
+}
+
+#chart {
+  margin: 20px 20px;
+}
+html {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  background-color: #f3e5c1;
+}
+
+.title {
+  font-family: 'Merriweather';
+  font-size: 20px;
+  font-weight:bold;
+  fill: #333;
+  text-anchor: middle;
+}
+
+.label {
+  text-anchor: middle;
+  font-family:'Libre Franklin';
+  fill: #777;
+}
+
+.female_label, .male_label{
+  font-size: 16px;
+}
+
+.age.label, .year.label {
+  font-size: 11px;
+  fill: #7c6363;
+}
+
+.axis line {
+  stroke: #947171;
+}
+
+.axis path {
+  display: none;
+}
+
+.axis text {
+  font-size: 13.5px;
+  font-family: 'Libre Franklin';
+  fill: #7c6363;
+}
+
+#controls * {
+  vertical-align: middle;
+}
