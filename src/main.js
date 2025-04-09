@@ -3,8 +3,21 @@
 var data, filteredData;
 var displayYear = 2000, isPlaying = false;
 var barHeight = 20, barWidth = 380, centerOffset = 20;
-var femaleScale = d3.scaleLinear().domain([0, 105000000]).range([0, -barWidth]);
-var maleScale = d3.scaleLinear().domain([0,  105000000]).range([0, barWidth]);
+var femaleScale = d3.scaleLinear().domain([0, 60000000]).range([0, -barWidth]);
+var maleScale = d3.scaleLinear().domain([0,  60000000]).range([0, barWidth]);
+
+// Mapping regions to their population limits
+const regionMaxPopulation = {
+  "Central and Southern Asia": 100000000,
+  "Sub-Saharan Africa": 100000000,
+  "Eastern Asia": 80000000,
+  "Europe": 40000000,
+  "Northern America": 20000000,
+  "Latin America & the Caribbean": 60000000,
+  "Northern Africa": 40000000,
+  "Oceania": 2000000,
+  "South-Eastern Asia": 40000000
+};
 
 /* Event handling */
 function handleYearInputChange() {
@@ -101,6 +114,16 @@ function initializeData(csv) {
 function filterDataByRegion(region) {
   // Filter data by the selected region
   filteredData = data.filter(d => d.region === region);
+  // Adjust scales based on the selected region
+  const maxPopulation = regionMaxPopulation[region]; 
+
+  femaleScale.domain([0, maxPopulation]);
+  maleScale.domain([0, maxPopulation]);
+
+  // Update the axes with the new scale
+  initializeAxes();
+
+  // Update the chart to reflect the new region data
   updateChart();
 }
 
